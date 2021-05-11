@@ -4,16 +4,35 @@ namespace Woow;
 
 use Woof\WPModels\Post;
 use Woof\Plugin as WoofPlugin;
+use Woof\Theme\Theme;
 use Woof\WPModels\Role;
 use Woof\WPModels\User;
 
 class Plugin extends WoofPlugin
 {
 
+    protected $pageManager;
 
     public function __construct($filepath)
     {
         parent::__construct($filepath);
+
+        $this->pageManager = new Administration();
+
+
+
+
+        $this->addRoute(
+            'GET',
+            'woow/calendar',
+            '/woow/calendar/[a:date]?/?',
+            function($date = null) {
+                $theme = Theme::getInstance();
+                echo $theme->getView('_blank')->render();
+            }
+        );
+
+
 
 
         $this->addRoute(
@@ -79,4 +98,5 @@ class Plugin extends WoofPlugin
             'woow-home'
         );
     }
+
 }
