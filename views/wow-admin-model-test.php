@@ -8,12 +8,31 @@ use Woof\Model\Wordpress\Manager\User;
 ?>
 
 <style>
+.tests {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tests section {
+    padding: 1rem;
+    border: solid 1px #000;
+    margin: 0.5rem;
+    flex-grow: 1;
+    background-color: #fafafa;
+}
 
 
-td, th {
+.tests table {
+    background-color: #ccc;
+}
+
+
+.tests table td, .tests table th {
     border: solid 1px #000 !important;
-    text-transform: none;
+}
 
+.tests table tr:nth-child(odd) {
+    background-color: #ffd;
 }
 
 </style>
@@ -22,11 +41,12 @@ td, th {
 <?php
 
 
-echo '<div>';
+echo '<div class="tests">';
 
     $postTypes = PostType::getAll();
 
     echo '<section>';
+        echo '<h2>Post type list</h2>';
         echo '<table>';
         foreach($postTypes as $postType) {
             echo '<tr>';
@@ -64,6 +84,7 @@ echo '<div>';
     $roles = Role::getAll();
 
     echo '<section>';
+        echo '<h2>Role list</h2>';
         echo '<table>';
         foreach($roles as $role) {
             echo '<tr>';
@@ -85,6 +106,7 @@ echo '<div>';
     $currentUser = User::getCurrent();
 
     echo '<section>';
+        echo '<h2>Current user</h2>';
         echo '<table>';
             echo '<tr>';
                 echo '<th>';
@@ -114,6 +136,7 @@ echo '<div>';
     $users = User::getAll();
 
     echo '<section>';
+        echo '<h2>User list</h2>';
         echo '<table>';
         foreach($users as $user) {
             echo '<tr>';
@@ -143,10 +166,33 @@ echo '<div>';
 
 
 
+
+    echo '<hr />';
+    $taxonomies = Term::getAll();
+
+    echo '<section>';
+        echo '<h2>Taxonomies list</h2>';
+        echo '<table>';
+        foreach($taxonomies as $taxonomy) {
+            echo '<tr>';
+                echo '<th>';
+                echo $taxonomy->getId();
+                echo '</th>';
+                echo '<td>';
+                    echo $taxonomy->getName();
+                echo '</td>';
+            echo '</tr>';
+        }
+        echo '</table>';
+    echo '</section>';
+
+
+
     echo '<hr />';
     $terms = Term::getAll();
 
     echo '<section>';
+        echo '<h2>Term list</h2>';
         echo '<table>';
         foreach($terms as $term) {
             echo '<tr>';
@@ -159,6 +205,7 @@ echo '<div>';
                 echo '<td>';
                     echo $term->getTaxonomy()->getName();
                 echo '</td>';
+
             echo '</tr>';
         }
         echo '</table>';
@@ -175,6 +222,7 @@ echo '<div>';
     $posts = Post::getAllPublish();
 
     echo '<section>';
+        echo '<h2>Published posts</h2>';
         echo '<table>';
         foreach($posts as $post) {
             echo '<tr>';
@@ -210,14 +258,11 @@ echo '<div>';
     echo '</section>';
 
 
-    return;
-
-
-
     echo '<hr />';
     $posts = Post::getAllDraft();
 
     echo '<section>';
+        echo '<h2>Draft posts</h2>';
         echo '<table>';
         foreach($posts as $post) {
             echo '<tr>';
@@ -242,6 +287,7 @@ echo '<div>';
     $posts = Post::getAll();
 
     echo '<section>';
+        echo '<h2>All posts</h2>';
         echo '<table>';
         foreach($posts as $post) {
             echo '<tr>';

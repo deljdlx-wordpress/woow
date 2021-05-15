@@ -15,10 +15,20 @@ class Administration extends WoofAdministration
 
 
         $this->addPage(
-            'Woow admininistration',
-            [$this, 'displayAdminPage'],
-            'woow-administration-index'
+            'Woow admininistration',        // label
+            [$this, 'displayAdminPage'],    //callback
+            'woow-administration-index'     // slug
         );
+
+
+        $this->addPage(
+            'Woow model test page',                   // caption
+            [$this, 'displayModelTestPage'],    //callback
+            'woow-administration-sandbox',    // slug
+            'woow-administration-index'       // parent
+        );
+
+
 
         $this->addPage(
             'Woow documentation',
@@ -27,6 +37,12 @@ class Administration extends WoofAdministration
             'woow-administration-index'
         );
 
+    }
+
+
+    public function displayModelTestPage()
+    {
+        echo $this->loadTemplate(__DIR__ . '/../views/wow-admin-model-test.php');
     }
 
 
