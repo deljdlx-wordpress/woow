@@ -39,6 +39,43 @@ use Woof\Model\Wordpress\Manager\User;
 
 
 <?php
+$displayPostsList = function($posts)
+{
+    echo '<table>';
+    foreach($posts as $post) {
+        echo '<tr>';
+            echo '<th>';
+            echo $post->getId();
+            echo '</th>';
+            echo '<td>';
+                echo $post->getTitle();
+            echo '</td>';
+            echo '<td>';
+                echo $post->getType()->getName();
+            echo '</td>';
+            echo '<td>';
+                echo $post->getStatus();
+            echo '</td>';
+
+            echo '<td>';
+                echo $post->getAuthor()->getDisplayName();
+            echo '</td>';
+
+            echo '<td>';
+            $termList = [];
+                $terms = $post->getTerms();
+                foreach($terms as $term) {
+                    $termList[] = $term->getLabel();
+                }
+                echo implode(', ', $termList);
+
+            echo '</td>';
+        echo '</tr>';
+    }
+    echo '</table>';
+};
+
+
 
 
 echo '<div class="tests">';
@@ -213,48 +250,12 @@ echo '<div class="tests">';
 
 
 
-
-
-
-
-
     echo '<hr />';
     $posts = Post::getAllPublish();
 
     echo '<section>';
         echo '<h2>Published posts</h2>';
-        echo '<table>';
-        foreach($posts as $post) {
-            echo '<tr>';
-                echo '<th>';
-                echo $post->getId();
-                echo '</th>';
-                echo '<td>';
-                    echo $post->getTitle();
-                echo '</td>';
-                echo '<td>';
-                    echo $post->getType()->getName();
-                echo '</td>';
-                echo '<td>';
-                    echo $post->getStatus();
-                echo '</td>';
-
-                echo '<td>';
-                    echo $post->getAuthor()->getDisplayName();
-                echo '</td>';
-
-                echo '<td>';
-                $termList = [];
-                    $terms = $post->getTerms();
-                    foreach($terms as $term) {
-                        $termList[] = $term->getLabel();
-                    }
-                    echo implode(', ', $termList);
-
-                echo '</td>';
-            echo '</tr>';
-        }
-        echo '</table>';
+        $displayPostsList($posts);
     echo '</section>';
 
 
@@ -263,24 +264,19 @@ echo '<div class="tests">';
 
     echo '<section>';
         echo '<h2>Draft posts</h2>';
-        echo '<table>';
-        foreach($posts as $post) {
-            echo '<tr>';
-                echo '<th>';
-                echo $post->getId();
-                echo '</th>';
-                echo '<td>';
-                    echo $post->getTitle();
-                echo '</td>';
-                echo '<td>';
-                    echo $post->getStatus();
-                echo '</td>';
-            echo '</tr>';
-        }
-        echo '</table>';
+        $displayPostsList($posts);;
     echo '</section>';
 
 
+
+    echo '<hr />';
+    $posts = Post::getAllInherit();
+
+    echo '<section>';
+        echo '<h2>Inherit posts</h2>';
+        echo '<table>';
+        $displayPostsList($posts);
+    echo '</section>';
 
 
     echo '<hr />';
@@ -288,42 +284,8 @@ echo '<div class="tests">';
 
     echo '<section>';
         echo '<h2>All posts</h2>';
-        echo '<table>';
-        foreach($posts as $post) {
-            echo '<tr>';
-                echo '<th>';
-                echo $post->getId();
-                echo '</th>';
-                echo '<td>';
-                    echo $post->getTitle();
-                echo '</td>';
-                echo '<td>';
-                    echo $post->getType()->getName();
-                echo '</td>';
-                echo '<td>';
-                    echo $post->getStatus();
-                echo '</td>';
-
-                echo '<td>';
-                    echo $post->getAuthor()->getDisplayName();
-                echo '</td>';
-
-                echo '<td>';
-                $termList = [];
-                    $terms = $post->getTerms();
-                    foreach($terms as $term) {
-                        $termList[] = $term->getLabel();
-                    }
-                    echo implode(', ', $termList);
-
-                echo '</td>';
-            echo '</tr>';
-        }
-        echo '</table>';
+        $displayPostsList($posts);
     echo '</section>';
-
-
-
 
 
 echo '</div>';
